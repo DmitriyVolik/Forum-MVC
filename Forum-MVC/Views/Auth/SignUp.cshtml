@@ -1,3 +1,20 @@
-@page
-@model Forum_MVC.Views.Auth.SignUp
-<h1>SIGN UP page</h1>
+
+
+<h1>Create your account</h1>
+<form action="/CreateAccount" class="w-25" method="post">
+  <div class="mb-3">
+    <label for="InputEmail" class="form-label">Email address</label>
+    <input type="email" class="form-control" id="InputEmail">
+  </div>
+  <div class="mb-3">
+    <label for="InputLogin" class="form-label">Login</label>
+    <input maxlength="12" type="text" class="form-control" id="InputLogin">
+  </div>
+  <div class="mb-3">
+    <label for="InputPassword" class="form-label">Password</label>
+    <input maxlength="16" type="password" class="form-control" id="InputPassword">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
