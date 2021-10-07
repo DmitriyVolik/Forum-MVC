@@ -35,6 +35,13 @@ namespace Forum_MVC
                 {
                     options.LoginPath = "/login";
                     options.AccessDeniedPath = "/index";
+                    options.Events = new CookieAuthenticationEvents()
+                    {
+                        OnSigningIn = async context =>
+                        {
+                            await Task.CompletedTask;
+                        }
+                    };
                 }
             );
             services.AddDbContext<Context>(opts => {
@@ -61,6 +68,7 @@ namespace Forum_MVC
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
