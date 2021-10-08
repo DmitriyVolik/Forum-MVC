@@ -1,5 +1,21 @@
-@page
-@model Forum_MVC.Views.Auth.SignIn
+@{
+  var error = TempData["Error"] as string;
+}
 
-<h1>SIGN IN page</h1>
+@if (!string.IsNullOrEmpty(error))
+{
+    <h2 class="alert-danger" style="padding: 20px">@error</h2>
+}
+<h1>Sign in your account</h1>
+<form action="/SignInAccount" class="w-25" method="post">
+  <div class="mb-3">
+    <label for="InputLogin" class="form-label">Login</label>
+    <input maxlength="12" type="text" class="form-control" id="InputLogin" name="login">
+  </div>
+  <div class="mb-3">
+    <label for="InputPassword" class="form-label">Password</label>
+    <input maxlength="16" type="password" class="form-control" id="InputPassword" name="password">
+  </div>
+  <button type="submit" class="btn btn-primary">Sign in</button>
+</form>
 

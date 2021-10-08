@@ -1,0 +1,65 @@
+@model List<Topic>
+<form action="" method="Post">
+    <div>
+        <label for="inputState">Topic</label>
+        <div class="form-row">
+            <div class="form-group"> 
+                <select id="inputState" class="form-control">
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        if (i==0)
+                        {
+                            <option value="@Model[i].Name" selected>@Model[i].Name</option>
+                            continue;
+                        }
+                        <option value="@Model[i].Name">@Model[i].Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group ml-3">
+                <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-secondary">Create new topic</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3 w-25">
+        <label for="TitleInput">Title</label>
+        <input type="text" id="TitleInput" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="DescriptionInput" class="form-label">Description</label>
+        <textarea class="form-control" id="DescriptionInput" rows="1"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="TextInput" class="form-label">Text</label>
+        <textarea class="form-control" id="TextInput" rows="6"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form action="/CreateTopic" method="Post">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label>Name</label>
+                    <input type="text" maxlength="16" class="form-control" name="Name">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+

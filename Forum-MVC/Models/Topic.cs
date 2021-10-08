@@ -1,6 +1,6 @@
 namespace Forum_MVC.Models
 {
-    public class Theme
+    public class Topic
     {
         public int Id { get; set; }
 

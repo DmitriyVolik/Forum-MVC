@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using СookieAuth.Models;
 
 namespace Forum_MVC.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20211008180412_RenamePostNameToTitle")]
+    partial class RenamePostNameToTitle
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,25 +34,25 @@ namespace Forum_MVC.Migrations
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ThemeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TopicId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TopicId");
+                    b.HasIndex("ThemeId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("Forum_MVC.Models.Topic", b =>
+            modelBuilder.Entity("Forum_MVC.Models.Theme", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -62,7 +64,7 @@ namespace Forum_MVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Topics");
+                    b.ToTable("Themes");
                 });
 
             modelBuilder.Entity("Forum_MVC.Models.User", b =>
@@ -88,15 +90,15 @@ namespace Forum_MVC.Migrations
 
             modelBuilder.Entity("Forum_MVC.Models.Post", b =>
                 {
-                    b.HasOne("Forum_MVC.Models.Topic", "Topic")
+                    b.HasOne("Forum_MVC.Models.Theme", "Theme")
                         .WithMany()
-                        .HasForeignKey("TopicId");
+                        .HasForeignKey("ThemeId");
 
                     b.HasOne("Forum_MVC.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
-                    b.Navigation("Topic");
+                    b.Navigation("Theme");
 
                     b.Navigation("User");
                 });

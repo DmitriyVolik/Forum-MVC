@@ -14,7 +14,7 @@ namespace СookieAuth.Models
         }
         
         public DbSet<User> Users { get; set; }
-        public DbSet<Theme> Themes { get; set; }
+        public DbSet<Topic> Topics { get; set; }
         public DbSet<Post> Posts { get; set; }
     }
 }
