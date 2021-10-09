@@ -1,6 +1,60 @@
-﻿@{
+﻿@model Forum_MVC.Models.ViewModels.PostsViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+
+<div class="btn-group">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Topic
+    </button>
+    <div class="dropdown-menu">
+        @foreach (var item in Model.Topics)
+        {
+            if (Model.ActiveTopicId ==@item.Id ){<a class="dropdown-item active" href="/?topic=@item.Id">@item.Name</a>}
+            else {<a class="dropdown-item" href="/?topic=@item.Id">@item.Name</a>}
+        }
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="dropdown-divider"></div>
+            if (Model.ActiveTopicId == -1){<a class="dropdown-item active" href="/?topic=-1" >My posts</a>}
+            else {<a class="dropdown-item" href="/?topic=-1" >My posts</a>}
+        }
+        <div class="dropdown-divider"></div>
+        @if (Model.ActiveTopicId == 0){<a class="dropdown-item active" href="/" >All</a>}
+        else {<a class="dropdown-item" href="/" >All</a>}
+    </div>
 </div>
+
+<div class="d-flex align-content-center flex-wrap justify-content-center">
+
+    @foreach (var item in Model.Posts)
+    {
+        
+        <dvi class="m-3">
+            <div class="card border-dark mb-1"  style="max-width: 15rem;">
+                <div class="card-header bg-transparent border-dark">@item.Topic.Name</div>
+                <div class="card-body text-dark">
+                    <h5 class="card-title">@item.Title</h5>
+                    <p class="card-text">@item.Description</p>
+                </div>
+                <div class="card-footer bg-transparent border-dark">@item.User.Login</div>
+                <a href="Posts/OpenPost?id=@item.Id" class="stretched-link"></a>
+            </div>
+            @if (User.Identity.Name==item.User.Login)
+            {
+                <a href="Posts/EditPost" class="ml-1" >Edit</a>
+            }
+        </dvi>
+    }
+</div>
+
+<style>
+    .card:hover {
+        box-shadow: 5px 6px 6px 2px #e9ecef;
+        transform: scale(1.1)
+    }
+</style>
+
+
+
+

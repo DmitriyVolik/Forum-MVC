@@ -1,0 +1,11 @@
+@model Post
+<div class="media">
+    <div class="media-body">
+        <h5 class="mt-0">Topic: <strong>@Model.Topic.Name</strong></h5>
+        <h5 class="mt-0">@Model.Title</h5>
+        <p>Description: @Model.Description</p>
+        <p>@Model.Text</p>
+        <p class="text-secondary">@Model.User.Login</p>
+    </div>
+</div>
+

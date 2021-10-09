@@ -1,18 +1,27 @@
-@model List<Topic>
-<form action="" method="Post">
+@model Forum_MVC.Models.ViewModels.PostEditViewModel
+@{
+  var error = TempData["Error"] as string;
+}
+@if (!string.IsNullOrEmpty(error))
+{
+    <h2 class="alert-danger" style="padding: 20px">@error</h2>
+}
+<h1>Create new post</h1>
+<div class="validation" asp-validation-summary="ModelOnly"></div>
+<form asp-action="CreatePost" asp-controller="Posts" method="Post">
     <div>
         <label for="inputState">Topic</label>
         <div class="form-row">
-            <div class="form-group"> 
-                <select id="inputState" class="form-control">
-                    @for (int i = 0; i < Model.Count; i++)
+            <div class="form-group">
+                <select id="inputState" asp-for="TopicId" class="form-control">
+                    @for (int i = 0; i < Model.AllTopics.Count; i++)
                     {
-                        if (i==0)
+                        if (i == 0)
                         {
-                            <option value="@Model[i].Name" selected>@Model[i].Name</option>
+                            <option value="@Model.AllTopics[i].Id" selected>@Model.AllTopics[i].Name</option>
                             continue;
                         }
-                        <option value="@Model[i].Name">@Model[i].Name</option>
+                        <option value="@Model.AllTopics[i].Id">@Model.AllTopics[i].Name</option>
                     }
                 </select>
             </div>
@@ -21,45 +30,47 @@
             </div>
         </div>
     </div>
-
     <div class="mb-3 w-25">
         <label for="TitleInput">Title</label>
-        <input type="text" id="TitleInput" class="form-control">
+        <input asp-for="Title" minlength="2" type="text" id="TitleInput" class="form-control">
+        <span class="text-danger" asp-validation-for="Title"></span>
     </div>
     <div class="mb-3">
         <label for="DescriptionInput" class="form-label">Description</label>
-        <textarea class="form-control" id="DescriptionInput" rows="1"></textarea>
+        <textarea asp-for="Description" class="form-control" id="DescriptionInput" rows="1"></textarea>
+        <span class="text-danger" asp-validation-for="Description"></span>
     </div>
     <div class="mb-3">
         <label for="TextInput" class="form-label">Text</label>
-        <textarea class="form-control" id="TextInput" rows="6"></textarea>
+        <textarea asp-for="Text" class="form-control" id="TextInput" rows="6"></textarea>
+        <span class="text-danger" asp-validation-for="Text"></span>
     </div>
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
 
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <form action="/CreateTopic" method="Post">
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label>Name</label>
-                    <input type="text" maxlength="16" class="form-control" name="Name">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/CreateTopic" method="Post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label>Name</label>
+                        <input type="text" maxlength="16" class="form-control" name="Name">
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Save changes</button>
-            </div>
-        </form>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
 
 

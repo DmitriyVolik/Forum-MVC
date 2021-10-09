@@ -32,6 +32,11 @@ namespace Forum_MVC.Controllers
         public IActionResult CreateAccount(string email, string login, string password)
         {
             bool hasErrors=false;
+            if (email==null || login==null || password==null)
+            {
+                TempData["Error"] += "Error: all fields must be filled\n";
+                return View("SignUp");
+            }
             if (_db.Users.FirstOrDefault(x=>x.Login==login)!=null)
             {
                 TempData["Error"] += "Error: username is already in use\n";

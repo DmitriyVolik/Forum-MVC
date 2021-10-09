@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Forum_MVC.Models;
+using Forum_MVC.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using СookieAuth.Models;
@@ -22,9 +23,31 @@ namespace Forum_MVC.Controllers
             _db = db;
         }
         
-        public IActionResult Index()
+        public IActionResult Index(int topic)
         {
-            return View();
+            IEnumerable<Post> posts;
+            if (topic==0)
+            {
+                posts=_db.Posts.Include(x => x.User)
+                    .Include(x => x.Topic);
+            }
+            else if (topic==-1)
+            {
+                posts=_db.Posts.Include(x => x.User)
+                    .Include(x => x.Topic).Where(x=>x.User.Login==User.Identity.Name);
+            }
+            else
+            {
+                posts=_db.Posts.Include(x => x.User)
+                    .Include(x => x.Topic).Where(x=>x.Topic.Id==topic);
+            }
+            return View(new PostsViewModel()
+            {
+                Posts = posts,
+                Topics = _db.Topics,
+                ActiveTopicId = topic
+            });
+            
         }
 
         public IActionResult Privacy()

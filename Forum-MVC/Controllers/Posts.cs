@@ -1,7 +1,11 @@
 using System;
 using System.Linq;
 using Forum_MVC.Models;
+using Forum_MVC.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using Microsoft.Extensions.Logging;
 using СookieAuth.Models;
 
@@ -18,17 +22,62 @@ namespace Forum_MVC.Controllers
             _db = db;
         }
         
-        public IActionResult CreatePost()
+        
+        public IActionResult OpenPost(int id)
         {
-            return View(_db.Topics.ToList());
+            return View(_db.Posts.Include(x=>x.Topic)
+                .Include(x=>x.User)
+                .FirstOrDefault(x=>x.Id==id));
+        }
+        
+        public IActionResult EditPost(int id)
+        {
+            var topic = _db.Posts.Include(x=>x.User).FirstOrDefault(x => x.Id == id);
+            if (User.Identity.Name==topic.User.Login)
+            {
+                return Redirect("/");
+            }
+            return View();
         }
 
+
+        [Authorize]
+        public IActionResult CreatePost()
+        {
+            return View( new PostEditViewModel(){AllTopics = _db.Topics.ToList()});
+        }
+        
         [HttpPost("CreateTopic")]
         public IActionResult CreateTopic(string name)
         {
-            _db.Topics.Add(new Topic() { Name = name });
-            _db.SaveChanges();
-            return View("CreatePost", _db.Topics.ToList());
+            if (_db.Topics.FirstOrDefault(x=>x.Name==name)!=null)
+            {
+                TempData["Error"] += "Error: This topic is already exists\n";
+                return View("CreatePost", new PostEditViewModel(){AllTopics = _db.Topics.ToList()});
+            }
+            if (name!=null)
+            {
+                _db.Topics.Add(new Topic() { Name = name });
+                _db.SaveChanges();
+            }
+            return View("CreatePost", new PostEditViewModel(){AllTopics = _db.Topics.ToList()});
+        }
+        
+        [Authorize]
+        [HttpPost]
+        public IActionResult CreatePost(PostEditViewModel postViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var topic = _db.Topics.FirstOrDefault(x => x.Id == postViewModel.TopicId);
+                var user = _db.Users.FirstOrDefault(x=>x.Login==User.Identity.Name);
+           
+                _db.Posts.Add(new Post(){Title = postViewModel.Title, Description = postViewModel.Description,
+                    Text = postViewModel.Text, Topic = topic, User =user });
+                _db.SaveChanges();
+                return Redirect("/");
+            }
+            return View( new PostEditViewModel(){AllTopics = _db.Topics.ToList()});
         }
         
     }
