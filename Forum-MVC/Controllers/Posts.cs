@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Forum_MVC.Models;
 using Forum_MVC.Models.ViewModels;
+using Forum_MVC.Views.Posts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,14 +31,50 @@ namespace Forum_MVC.Controllers
                 .FirstOrDefault(x=>x.Id==id));
         }
         
+        
+        
+        [Authorize]
+        [HttpPost] 
+        public IActionResult EditPost(PostEditViewModel postEditViewModel)
+        {
+            var post = _db.Posts.Include(x=>x.User)
+                .FirstOrDefault(x => x.Id == postEditViewModel.PostId);
+
+            if ( post!= null && User.Identity.Name==post.User.Login)
+            {
+                post.Topic = _db.Topics.FirstOrDefault(x => x.Id == postEditViewModel.TopicId);
+
+                post.Title = postEditViewModel.Title;
+
+                post.Description = postEditViewModel.Description;
+
+                post.Text = postEditViewModel.Description;
+
+                _db.SaveChanges();
+            }
+
+            return Redirect("/");
+
+        }
+        
+        [Authorize]
         public IActionResult EditPost(int id)
         {
-            var topic = _db.Posts.Include(x=>x.User).FirstOrDefault(x => x.Id == id);
-            if (User.Identity.Name==topic.User.Login)
+            var post = _db.Posts.Include(x=>x.User)
+                .Include(x=>x.Topic).FirstOrDefault(x => x.Id == id);
+            if (User.Identity.Name!=post.User.Login)
             {
                 return Redirect("/");
             }
-            return View();
+            return View(new PostEditViewModel()
+            {
+                PostId = post.Id,
+                Title = post.Title,
+                Description = post.Description,
+                Text = post.Text,
+                AllTopics = _db.Topics.ToList(),
+                TopicId = post.Topic.Id
+            });
         }
 
 

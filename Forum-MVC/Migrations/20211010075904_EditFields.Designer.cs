@@ -10,8 +10,8 @@ using СookieAuth.Models;
 namespace Forum_MVC.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20211009184619_Edit")]
-    partial class Edit
+    [Migration("20211010075904_EditFields")]
+    partial class EditFields
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,7 +30,8 @@ namespace Forum_MVC.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(230)
+                        .HasColumnType("nvarchar(230)");
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -38,8 +39,8 @@ namespace Forum_MVC.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int?>("TopicId")
                         .HasColumnType("int");

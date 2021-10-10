@@ -8,10 +8,12 @@ namespace Forum_MVC.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(12)]
+        [MaxLength(20)]
         public string Title { get; set;}
 
         [Required]
+        [MaxLength(230)]
+        [MinLength(10)]
         public string Description { get; set;}
 
         [Required]

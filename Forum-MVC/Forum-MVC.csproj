@@ -13,4 +13,8 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.10" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Components\Test.cshtml" />
+    </ItemGroup>
+
 </Project>

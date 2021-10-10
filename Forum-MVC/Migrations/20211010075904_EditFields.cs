@@ -2,7 +2,7 @@
 
 namespace Forum_MVC.Migrations
 {
-    public partial class Edit : Migration
+    public partial class EditFields : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,8 +51,8 @@ namespace Forum_MVC.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "Title",
                 table: "Posts",
-                type: "nvarchar(12)",
-                maxLength: 12,
+                type: "nvarchar(20)",
+                maxLength: 20,
                 nullable: false,
                 defaultValue: "",
                 oldClrType: typeof(string),
@@ -72,7 +72,8 @@ namespace Forum_MVC.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "Description",
                 table: "Posts",
-                type: "nvarchar(max)",
+                type: "nvarchar(230)",
+                maxLength: 230,
                 nullable: false,
                 defaultValue: "",
                 oldClrType: typeof(string),
@@ -122,8 +123,8 @@ namespace Forum_MVC.Migrations
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(12)",
-                oldMaxLength: 12);
+                oldType: "nvarchar(20)",
+                oldMaxLength: 20);
 
             migrationBuilder.AlterColumn<string>(
                 name: "Text",
@@ -139,7 +140,8 @@ namespace Forum_MVC.Migrations
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(230)",
+                oldMaxLength: 230);
         }
     }
 }

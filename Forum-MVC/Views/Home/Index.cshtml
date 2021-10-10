@@ -31,7 +31,7 @@
     {
         
         <dvi class="m-3">
-            <div class="card border-dark mb-1"  style="max-width: 15rem;">
+            <div class="card border-dark mb-1">
                 <div class="card-header bg-transparent border-dark">@item.Topic.Name</div>
                 <div class="card-body text-dark">
                     <h5 class="card-title">@item.Title</h5>
@@ -42,7 +42,7 @@
             </div>
             @if (User.Identity.Name==item.User.Login)
             {
-                <a href="Posts/EditPost" class="ml-1" >Edit</a>
+                <a href="Posts/EditPost?id=@item.Id" class="ml-1" >Edit</a>
             }
         </dvi>
     }
@@ -52,6 +52,10 @@
     .card:hover {
         box-shadow: 5px 6px 6px 2px #e9ecef;
         transform: scale(1.1)
+    }
+    .card{
+        width: 19rem;
+        height: 24rem;
     }
 </style>
 

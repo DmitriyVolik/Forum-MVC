@@ -1,0 +1,39 @@
+@model Forum_MVC.Models.ViewModels.PostEditViewModel
+
+<div>
+    <label for="inputState">Topic</label>
+    <div class="form-row">
+        <div class="form-group">
+            <select id="inputState" asp-for="TopicId" class="form-control">
+                @for (int i = 0; i < Model.AllTopics.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        <option value="@Model.AllTopics[i].Id" selected>@Model.AllTopics[i].Name</option>
+                        continue;
+                    }
+                    <option value="@Model.AllTopics[i].Id">@Model.AllTopics[i].Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group ml-3">
+            <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-secondary">Create new topic</button>
+        </div>
+    </div>
+</div>
+<div class="mb-3 w-25">
+    <label for="TitleInput">Title</label>
+    <input asp-for="Title" minlength="2" maxlength="20" type="text" id="TitleInput" class="form-control">
+    <span class="text-danger" asp-validation-for="Title"></span>
+</div>
+<div class="mb-3">
+    <label for="DescriptionInput" class="form-label">Description</label>
+    <textarea maxlength="230" asp-for="Description" class="form-control" id="DescriptionInput" rows="2"></textarea>
+    <span class="text-danger" asp-validation-for="Description"></span>
+</div>
+<div class="mb-3">
+    <label for="TextInput" class="form-label">Text</label>
+    <textarea asp-for="Text" class="form-control" id="TextInput" rows="6"></textarea>
+    <span class="text-danger" asp-validation-for="Text"></span>
+</div>
+<button type="submit" class="btn btn-primary">Save</button>

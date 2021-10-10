@@ -1,4 +1,12 @@
+@using Forum_MVC.Views.Components
+@using Forum_MVC.Models.ViewModels
 @model Forum_MVC.Models.ViewModels.PostEditViewModel
 
 <h1>Edit your post</h1>
+
+<div class="validation" asp-validation-summary="ModelOnly"></div>
+<form asp-action="EditPost" asp-controller="Posts" method="Post">   
+    <partial name="Components/PostView" model="Model"/>
+</form>
+<partial name="Components/TopicModal" model="Model"/>
 

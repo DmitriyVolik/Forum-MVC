@@ -28,7 +28,8 @@ namespace Forum_MVC.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(230)
+                        .HasColumnType("nvarchar(230)");
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -36,8 +37,8 @@ namespace Forum_MVC.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int?>("TopicId")
                         .HasColumnType("int");

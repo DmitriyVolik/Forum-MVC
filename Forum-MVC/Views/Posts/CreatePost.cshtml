@@ -9,68 +9,10 @@
 <h1>Create new post</h1>
 <div class="validation" asp-validation-summary="ModelOnly"></div>
 <form asp-action="CreatePost" asp-controller="Posts" method="Post">
-    <div>
-        <label for="inputState">Topic</label>
-        <div class="form-row">
-            <div class="form-group">
-                <select id="inputState" asp-for="TopicId" class="form-control">
-                    @for (int i = 0; i < Model.AllTopics.Count; i++)
-                    {
-                        if (i == 0)
-                        {
-                            <option value="@Model.AllTopics[i].Id" selected>@Model.AllTopics[i].Name</option>
-                            continue;
-                        }
-                        <option value="@Model.AllTopics[i].Id">@Model.AllTopics[i].Name</option>
-                    }
-                </select>
-            </div>
-            <div class="form-group ml-3">
-                <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-secondary">Create new topic</button>
-            </div>
-        </div>
-    </div>
-    <div class="mb-3 w-25">
-        <label for="TitleInput">Title</label>
-        <input asp-for="Title" minlength="2" type="text" id="TitleInput" class="form-control">
-        <span class="text-danger" asp-validation-for="Title"></span>
-    </div>
-    <div class="mb-3">
-        <label for="DescriptionInput" class="form-label">Description</label>
-        <textarea asp-for="Description" class="form-control" id="DescriptionInput" rows="1"></textarea>
-        <span class="text-danger" asp-validation-for="Description"></span>
-    </div>
-    <div class="mb-3">
-        <label for="TextInput" class="form-label">Text</label>
-        <textarea asp-for="Text" class="form-control" id="TextInput" rows="6"></textarea>
-        <span class="text-danger" asp-validation-for="Text"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Create</button>
+    <partial name="Components/PostView" model="Model" />
 </form>
+<partial name="Components/TopicModal" />
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="/CreateTopic" method="Post">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label>Name</label>
-                        <input type="text" maxlength="16" class="form-control" name="Name">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Create</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 
