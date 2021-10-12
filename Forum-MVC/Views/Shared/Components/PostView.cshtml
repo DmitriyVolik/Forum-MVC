@@ -36,4 +36,5 @@
     <textarea asp-for="Text" class="form-control" id="TextInput" rows="6"></textarea>
     <span class="text-danger" asp-validation-for="Text"></span>
 </div>
+<input asp-for="PostId" value="@Model.PostId" type="hidden">
 <button type="submit" class="btn btn-primary">Save</button>

@@ -5,8 +5,8 @@ namespace Forum_MVC.Models.ViewModels
 {
     public class PostEditViewModel
     {
-        public int PostId;
-        
+        public int PostId { get; set; }
+
         [Required]
         [MaxLength(20,ErrorMessage = "Maximum lenght is 12" )]
         public string Title { get; set; }

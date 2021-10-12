@@ -40,7 +40,7 @@ namespace Forum_MVC.Controllers
             var post = _db.Posts.Include(x=>x.User)
                 .FirstOrDefault(x => x.Id == postEditViewModel.PostId);
 
-            if ( post!= null && User.Identity.Name==post.User.Login)
+            if (post!=null && User.Identity.Name==post.User.Login)
             {
                 post.Topic = _db.Topics.FirstOrDefault(x => x.Id == postEditViewModel.TopicId);
 
@@ -66,9 +66,10 @@ namespace Forum_MVC.Controllers
             {
                 return Redirect("/");
             }
+
             return View(new PostEditViewModel()
             {
-                PostId = post.Id,
+                PostId = id,
                 Title = post.Title,
                 Description = post.Description,
                 Text = post.Text,

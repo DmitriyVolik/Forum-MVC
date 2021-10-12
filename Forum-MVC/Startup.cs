@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Forum_MVC.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -70,6 +71,8 @@ namespace Forum_MVC
 
             app.UseAuthentication();
             app.UseAuthorization();
+            
+            SeedData.EnsurePopulated(app);
 
             app.UseEndpoints(endpoints =>
             {
