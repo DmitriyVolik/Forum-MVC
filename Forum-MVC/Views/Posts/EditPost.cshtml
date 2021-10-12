@@ -4,7 +4,33 @@
 
 <div class="validation" asp-validation-summary="ModelOnly"></div>
 <form asp-action="EditPost" asp-controller="Posts" method="Post">   
-    <partial name="Components/PostView" model="Model"/>
+  <partial name="Components/PostView" model="Model"/>
 </form>
-<partial name="Components/TopicModal" model="Model"/>
+
+<button type="button" class="btn btn-danger mt-3" data-toggle="modal" data-target="#delModal">
+  Delete post
+</button>
+
+<div class="modal fade" id="delModal" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="delModalLabel">Delete post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Sure you want to delete post?
+
+      </div>
+      <div class="modal-footer">
+        <form action="Delete?id=@Model.PostId" method="Post">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-danger ">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 

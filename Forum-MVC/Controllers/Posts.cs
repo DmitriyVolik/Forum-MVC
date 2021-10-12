@@ -117,6 +117,22 @@ namespace Forum_MVC.Controllers
             }
             return View( new PostEditViewModel(){AllTopics = _db.Topics.ToList()});
         }
+
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var post = _db.Posts.Include(x=>x.User).FirstOrDefault(x => x.Id == id);
+            
+            if (User.Identity.Name==post.User.Login)
+            {
+                _db.Remove(post);
+                _db.SaveChanges();
+            }
+
+            return Redirect("/");
+        }
         
     }
 }
